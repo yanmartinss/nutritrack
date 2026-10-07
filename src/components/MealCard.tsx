@@ -2,16 +2,14 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { colors, spacing } from '../theme';
 import type { Meal } from '../types/nutrition';
-import { getMealKcal } from '../utils';
 
 import { Card } from './Card';
 
 interface MealCardProps {
-  readonly meal: Meal;
+  meal: Meal;
 }
 
 export function MealCard({ meal }: MealCardProps) {
-  const kcal = getMealKcal(meal);
   const lastIndex = meal.items.length - 1;
 
   return (
@@ -21,7 +19,9 @@ export function MealCard({ meal }: MealCardProps) {
           <Text style={styles.item} numberOfLines={1}>
             {item.name}
           </Text>
-          {index === lastIndex && <Text style={styles.kcal}>{`${kcal} kcal`}</Text>}
+          {index === lastIndex && (
+            <Text style={styles.kcal}>{`${meal.kcal} kcal`}</Text>
+          )}
         </View>
       ))}
     </Card>

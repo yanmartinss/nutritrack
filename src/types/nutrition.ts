@@ -13,13 +13,12 @@ export interface Macro {
 export interface FoodItem {
   readonly id: string;
   readonly name: string;
-  readonly kcal: number;
 }
 
-/** A meal's total kcal is derived from its items (see getMealKcal). */
 export interface Meal {
   readonly id: string;
   readonly items: readonly FoodItem[];
+  readonly kcal: number;
 }
 
 export interface CalorieSummary {

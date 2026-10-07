@@ -43,8 +43,8 @@ src/
 ├── components/          presentational components + index.ts barrel
 ├── types/nutrition.ts   domain interfaces and union types
 ├── data/mockData.ts     typed mock data
-├── theme/               color, spacing and radius tokens
-└── utils/               pure functions (dates, progress, calories)
+├── theme.ts             color, spacing and radius tokens
+└── utils.ts             pure functions (dates, progress, calories)
 ```
 
 A detailed walkthrough of the code (in Portuguese) is in `NutriTrack-guia-do-codigo.docx`.

@@ -11,7 +11,7 @@ This is a React Native CLI application (no Expo) written in TypeScript (strict).
 ## Structure
 
 - `index.js` registers `src/App.tsx` with `AppRegistry`.
-- `src/types` (domain interfaces), `src/data` (mock data), `src/theme` (tokens), `src/utils` (pure functions), `src/components` (presentational, typed props, barrel in `index.ts`), `src/screens` (composition + screen state).
+- `src/types` (domain interfaces), `src/data` (mock data), `src/theme.ts` (tokens), `src/utils.ts` (pure functions), `src/components` (presentational, typed props, barrel in `index.ts`), `src/screens` (composition + screen state).
 - Components receive data through props and never import `src/data` directly. Displayed values are computed from data, not hardcoded in JSX.
 
 ## Commands

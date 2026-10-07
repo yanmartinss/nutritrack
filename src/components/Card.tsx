@@ -4,8 +4,8 @@ import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 import { colors, radius, spacing } from '../theme';
 
 interface CardProps {
-  readonly children: ReactNode;
-  readonly style?: StyleProp<ViewStyle>;
+  children: ReactNode;
+  style?: StyleProp<ViewStyle>;
 }
 
 export function Card({ children, style }: CardProps) {

@@ -1,19 +1,19 @@
-import { Pressable, StyleSheet, Text, type StyleProp, type ViewStyle } from 'react-native';
+import { Pressable, StyleSheet, Text } from 'react-native';
 
 import { colors, radius, spacing } from '../theme';
 
 interface PrimaryButtonProps {
-  readonly label: string;
-  readonly onPress?: () => void;
-  readonly style?: StyleProp<ViewStyle>;
+  label: string;
+  onPress?: () => void;
 }
 
-export function PrimaryButton({ label, onPress, style }: PrimaryButtonProps) {
+export function PrimaryButton({ label, onPress }: PrimaryButtonProps) {
   return (
     <Pressable
       onPress={onPress}
       accessibilityRole="button"
-      style={({ pressed }) => [styles.button, pressed && styles.pressed, style]}>
+      style={({ pressed }) => [styles.button, pressed && styles.pressed]}
+    >
       <Text style={styles.label}>{label.toUpperCase()}</Text>
     </Pressable>
   );

@@ -2,12 +2,11 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { colors, spacing } from '../theme';
 import type { Macro } from '../types/nutrition';
-import { clampProgress } from '../utils';
 
 import { ProgressBar } from './ProgressBar';
 
 interface MacroRowProps {
-  readonly macro: Macro;
+  macro: Macro;
 }
 
 export function MacroRow({ macro }: MacroRowProps) {
@@ -17,9 +16,11 @@ export function MacroRow({ macro }: MacroRowProps) {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.label}>{label}</Text>
-        <Text style={styles.value}>{`${consumed}${unit} / ${goal}${unit}`}</Text>
+        <Text
+          style={styles.value}
+        >{`${consumed}${unit} / ${goal}${unit}`}</Text>
       </View>
-      <ProgressBar progress={clampProgress(consumed, goal)} />
+      <ProgressBar value={consumed} max={goal} />
     </View>
   );
 }

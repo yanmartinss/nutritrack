@@ -7,7 +7,7 @@ import {
   AppHeader,
   CalorieRing,
   GradientBackground,
-  MacroSummary,
+  MacroRow,
   MealCard,
   PrimaryButton,
   TabBar,
@@ -16,15 +16,19 @@ import { colors, spacing } from '../theme';
 import type { DailyDashboard, Tab, TabKey } from '../types/nutrition';
 import { formatDayLabel } from '../utils';
 
+const TABS: readonly Tab[] = [
+  { key: 'today', label: 'Today' },
+  { key: 'history', label: 'History' },
+  { key: 'foods', label: 'Foods' },
+  { key: 'settings', label: 'Settings' },
+];
+
 interface DashboardScreenProps {
-  readonly data: DailyDashboard;
-  readonly tabs: readonly Tab[];
-  readonly onAddMeal?: () => void;
-  readonly onLogFood?: () => void;
+  data: DailyDashboard;
 }
 
 /** Composes the dashboard from presentational components; owns only tab state. */
-export function DashboardScreen({ data, tabs, onAddMeal, onLogFood }: DashboardScreenProps) {
+export function DashboardScreen({ data }: DashboardScreenProps) {
   const insets = useSafeAreaInsets();
   const [activeTab, setActiveTab] = useState<TabKey>('today');
 
@@ -34,28 +38,40 @@ export function DashboardScreen({ data, tabs, onAddMeal, onLogFood }: DashboardS
         from={colors.headerGradientStart}
         to={colors.headerGradientEnd}
         style={[styles.header, { paddingTop: insets.top + spacing.sm }]}
-        gradientId="dashboardHeader">
+      >
         <AppHeader dateLabel={formatDayLabel(data.date)} title="NutriTrack" />
         <View style={styles.summary}>
-          <CalorieRing goal={data.calories.goal} consumed={data.calories.consumed} />
-          <MacroSummary macros={data.macros} style={styles.macros} />
+          <CalorieRing
+            goal={data.calories.goal}
+            consumed={data.calories.consumed}
+          />
+          <View style={styles.macros}>
+            {data.macros.map(macro => (
+              <MacroRow key={macro.key} macro={macro} />
+            ))}
+          </View>
         </View>
       </GradientBackground>
 
-      <TabBar tabs={tabs} activeKey={activeTab} onChange={setActiveTab} />
+      <TabBar tabs={TABS} activeKey={activeTab} onChange={setActiveTab} />
 
-      <ScrollView style={styles.body} contentContainerStyle={styles.bodyContent}>
+      <ScrollView
+        style={styles.body}
+        contentContainerStyle={styles.bodyContent}
+      >
         <Text style={styles.sectionTitle} accessibilityRole="header">
           MEALS
         </Text>
-        {data.meals.map((meal) => (
+        {data.meals.map(meal => (
           <MealCard key={meal.id} meal={meal} />
         ))}
-        <AddMealCard onPress={onAddMeal} />
+        <AddMealCard />
       </ScrollView>
 
-      <View style={[styles.footer, { paddingBottom: insets.bottom + spacing.lg }]}>
-        <PrimaryButton label="Log Food" onPress={onLogFood} />
+      <View
+        style={[styles.footer, { paddingBottom: insets.bottom + spacing.lg }]}
+      >
+        <PrimaryButton label="Log Food" />
       </View>
     </View>
   );
@@ -77,8 +93,8 @@ const styles = StyleSheet.create({
   },
   macros: {
     flex: 1,
-    marginLeft: spacing.sm,
-    marginRight: spacing.sm,
+    gap: spacing.md,
+    marginHorizontal: spacing.sm,
   },
   body: {
     flex: 1,

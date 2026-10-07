@@ -5,8 +5,8 @@ import { colors, spacing } from '../theme';
 import { LeafIcon } from './LeafIcon';
 
 interface AppHeaderProps {
-  readonly dateLabel: string;
-  readonly title: string;
+  dateLabel: string;
+  title: string;
 }
 
 export function AppHeader({ dateLabel, title }: AppHeaderProps) {

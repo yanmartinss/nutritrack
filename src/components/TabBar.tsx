@@ -4,16 +4,16 @@ import { colors, spacing } from '../theme';
 import type { Tab, TabKey } from '../types/nutrition';
 
 interface TabBarProps {
-  readonly tabs: readonly Tab[];
-  readonly activeKey: TabKey;
-  readonly onChange: (key: TabKey) => void;
+  tabs: readonly Tab[];
+  activeKey: TabKey;
+  onChange: (key: TabKey) => void;
 }
 
 /** Controlled tab bar: the parent owns which tab is active. */
 export function TabBar({ tabs, activeKey, onChange }: TabBarProps) {
   return (
     <View style={styles.container} accessibilityRole="tablist">
-      {tabs.map((tab) => {
+      {tabs.map(tab => {
         const active = tab.key === activeKey;
         return (
           <Pressable
@@ -21,11 +21,14 @@ export function TabBar({ tabs, activeKey, onChange }: TabBarProps) {
             style={styles.tab}
             onPress={() => onChange(tab.key)}
             accessibilityRole="tab"
-            accessibilityState={{ selected: active }}>
+            accessibilityState={{ selected: active }}
+          >
             <Text style={[styles.label, active && styles.labelActive]}>
               {tab.label.toUpperCase()}
             </Text>
-            <View style={[styles.indicator, active && styles.indicatorActive]} />
+            <View
+              style={[styles.indicator, active && styles.indicatorActive]}
+            />
           </Pressable>
         );
       })}

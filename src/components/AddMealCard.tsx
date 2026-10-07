@@ -6,25 +6,35 @@ import { colors, spacing } from '../theme';
 import { Card } from './Card';
 
 interface AddMealCardProps {
-  readonly onPress?: () => void;
-  readonly label?: string;
+  onPress?: () => void;
 }
 
 const BUTTON_SIZE = 42;
 const CENTER = BUTTON_SIZE / 2;
 const ARM = BUTTON_SIZE * 0.22;
-const PLUS_PATH = `M ${CENTER - ARM} ${CENTER} H ${CENTER + ARM} M ${CENTER} ${CENTER - ARM} V ${CENTER + ARM}`;
+const PLUS_PATH = `M ${CENTER - ARM} ${CENTER} H ${CENTER + ARM} M ${CENTER} ${
+  CENTER - ARM
+} V ${CENTER + ARM}`;
 
-export function AddMealCard({ onPress, label = 'Add Meal' }: AddMealCardProps) {
+export function AddMealCard({ onPress }: AddMealCardProps) {
   return (
-    <Pressable onPress={onPress} accessibilityRole="button" accessibilityLabel={label}>
+    <Pressable
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel="Add Meal"
+    >
       {({ pressed }) => (
         <Card style={[styles.card, pressed && styles.pressed]}>
           <Svg width={BUTTON_SIZE} height={BUTTON_SIZE}>
             <Circle cx={CENTER} cy={CENTER} r={CENTER} fill={colors.primary} />
-            <Path d={PLUS_PATH} stroke={colors.onPrimary} strokeWidth={3} strokeLinecap="round" />
+            <Path
+              d={PLUS_PATH}
+              stroke={colors.onPrimary}
+              strokeWidth={3}
+              strokeLinecap="round"
+            />
           </Svg>
-          <Text style={styles.label}>{label}</Text>
+          <Text style={styles.label}>Add Meal</Text>
         </Card>
       )}
     </Pressable>

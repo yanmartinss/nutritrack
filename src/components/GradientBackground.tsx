@@ -1,35 +1,72 @@
-import type { ReactNode } from 'react';
-import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
+import { useState, type ReactNode } from 'react';
+import {
+  StyleSheet,
+  View,
+  type LayoutChangeEvent,
+  type StyleProp,
+  type ViewStyle,
+} from 'react-native';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 
 interface GradientBackgroundProps {
-  readonly from: string;
-  readonly to: string;
-  readonly children: ReactNode;
-  readonly style?: StyleProp<ViewStyle>;
-  /** Must be unique among gradients rendered at the same time. */
-  readonly gradientId?: string;
+  from: string;
+  to: string;
+  children: ReactNode;
+  style?: StyleProp<ViewStyle>;
 }
 
-/** Vertical linear gradient behind its children, drawn with react-native-svg. */
+interface Size {
+  width: number;
+  height: number;
+}
+
+const GRADIENT_ID = 'gradientBackground';
+
+/**
+ * Vertical linear gradient behind its children, drawn with react-native-svg.
+ * The container is filled with `to` as a fallback, and the SVG is sized from
+ * the measured layout so no platform has to resolve percentage sizes.
+ */
 export function GradientBackground({
   from,
   to,
   children,
   style,
-  gradientId = 'gradientBackground',
 }: GradientBackgroundProps) {
+  const [size, setSize] = useState<Size | null>(null);
+
+  const handleLayout = (event: LayoutChangeEvent) => {
+    const { width, height } = event.nativeEvent.layout;
+    setSize(prev =>
+      prev?.width === width && prev?.height === height
+        ? prev
+        : { width, height },
+    );
+  };
+
   return (
-    <View style={style}>
-      <Svg style={StyleSheet.absoluteFill} width="100%" height="100%" preserveAspectRatio="none">
-        <Defs>
-          <LinearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-            <Stop offset="0" stopColor={from} />
-            <Stop offset="1" stopColor={to} />
-          </LinearGradient>
-        </Defs>
-        <Rect x="0" y="0" width="100%" height="100%" fill={`url(#${gradientId})`} />
-      </Svg>
+    <View style={[{ backgroundColor: to }, style]} onLayout={handleLayout}>
+      {size && (
+        <Svg
+          style={StyleSheet.absoluteFill}
+          width={size.width}
+          height={size.height}
+        >
+          <Defs>
+            <LinearGradient id={GRADIENT_ID} x1="0" y1="0" x2="0" y2="1">
+              <Stop offset="0" stopColor={from} />
+              <Stop offset="1" stopColor={to} />
+            </LinearGradient>
+          </Defs>
+          <Rect
+            x={0}
+            y={0}
+            width={size.width}
+            height={size.height}
+            fill={`url(#${GRADIENT_ID})`}
+          />
+        </Svg>
+      )}
       {children}
     </View>
   );

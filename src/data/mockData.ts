@@ -1,4 +1,4 @@
-import type { DailyDashboard, Tab } from '../types/nutrition';
+import type { DailyDashboard } from '../types/nutrition';
 
 export const dashboard: DailyDashboard = {
   date: '2026-02-01',
@@ -11,26 +11,21 @@ export const dashboard: DailyDashboard = {
   meals: [
     {
       id: 'breakfast',
+      kcal: 380,
       items: [
-        { id: 'oatmeal', name: 'Oatmeal with berries', kcal: 190 },
-        { id: 'milk', name: '2% Milk', kcal: 110 },
-        { id: 'almonds', name: 'Almonds', kcal: 80 },
+        { id: 'oatmeal', name: 'Oatmeal with berries' },
+        { id: 'milk', name: '2% Milk' },
+        { id: 'almonds', name: 'Almonds' },
       ],
     },
     {
       id: 'lunch',
+      kcal: 450,
       items: [
-        { id: 'chicken-salad', name: 'Grilled Chicken Salad', kcal: 250 },
-        { id: 'bread', name: 'Whole Wheat Bread', kcal: 120 },
-        { id: 'dressing', name: 'Olive Oil Dressing', kcal: 80 },
+        { id: 'chicken-salad', name: 'Grilled Chicken Salad' },
+        { id: 'bread', name: 'Whole Wheat Bread' },
+        { id: 'dressing', name: 'Olive Oil Dressing' },
       ],
     },
   ],
 };
-
-export const tabs: readonly Tab[] = [
-  { key: 'today', label: 'Today' },
-  { key: 'history', label: 'History' },
-  { key: 'foods', label: 'Foods' },
-  { key: 'settings', label: 'Settings' },
-];

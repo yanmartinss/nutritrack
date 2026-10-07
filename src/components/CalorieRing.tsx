@@ -1,22 +1,34 @@
 import { StyleSheet, Text, View } from 'react-native';
-import Svg, { Circle, Defs, G, Path, Text as SvgText, TextPath } from 'react-native-svg';
+import Svg, {
+  Circle,
+  Defs,
+  G,
+  Path,
+  Text as SvgText,
+  TextPath,
+} from 'react-native-svg';
 
 import { colors } from '../theme';
 import { clampProgress, getCaloriesLeft } from '../utils';
 
 interface CalorieRingProps {
-  readonly goal: number;
-  readonly consumed: number;
+  goal: number;
+  consumed: number;
   /** Diameter of the ring itself; room for the caption is added around it. */
-  readonly size?: number;
-  readonly strokeWidth?: number;
+  size?: number;
+  strokeWidth?: number;
 }
 
 const CAPTION_FONT_SIZE = 12;
 const CAPTION_GAP = 6;
 const CAPTION_PATH_ID = 'calorieRingCaption';
 
-export function CalorieRing({ goal, consumed, size = 136, strokeWidth = 10 }: CalorieRingProps) {
+export function CalorieRing({
+  goal,
+  consumed,
+  size = 136,
+  strokeWidth = 10,
+}: CalorieRingProps) {
   const progress = clampProgress(consumed, goal);
   const caloriesLeft = getCaloriesLeft({ goal, consumed });
   const percentLeft = Math.round(clampProgress(caloriesLeft, goal) * 100);
@@ -34,19 +46,26 @@ export function CalorieRing({ goal, consumed, size = 136, strokeWidth = 10 }: Ca
   const captionRadius = size / 2 + CAPTION_GAP;
   const captionPath =
     `M ${center - captionRadius} ${center} ` +
-    `A ${captionRadius} ${captionRadius} 0 0 1 ${center + captionRadius} ${center}`;
+    `A ${captionRadius} ${captionRadius} 0 0 1 ${
+      center + captionRadius
+    } ${center}`;
 
   return (
     <View
       style={{ width: canvas, height: canvas }}
       accessible
-      accessibilityLabel={`${caloriesLeft} kilocalories left, ${percentLeft}% of daily goal`}>
+      accessibilityLabel={`${caloriesLeft} kilocalories left, ${percentLeft}% of daily goal`}
+    >
       <Svg width={canvas} height={canvas}>
         <Defs>
           <Path id={CAPTION_PATH_ID} d={captionPath} />
         </Defs>
         <SvgText fill={colors.textSecondary} fontSize={CAPTION_FONT_SIZE}>
-          <TextPath href={`#${CAPTION_PATH_ID}`} startOffset="38%" textAnchor="middle">
+          <TextPath
+            href={`#${CAPTION_PATH_ID}`}
+            startOffset="38%"
+            textAnchor="middle"
+          >
             {`${percentLeft}% of daily goal`}
           </TextPath>
         </SvgText>

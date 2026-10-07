@@ -5,7 +5,6 @@ export { Card } from './Card';
 export { GradientBackground } from './GradientBackground';
 export { LeafIcon } from './LeafIcon';
 export { MacroRow } from './MacroRow';
-export { MacroSummary } from './MacroSummary';
 export { MealCard } from './MealCard';
 export { PrimaryButton } from './PrimaryButton';
 export { ProgressBar } from './ProgressBar';
